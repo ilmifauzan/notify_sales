@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <record id="config_notify_form" model="ir.ui.view">
+            <field name="name">notify_sales.config_notify.form</field>
+            <field name="model">notify_sales.config_notify</field>
+            <field name="arch" type="xml">
+                <form string="Config Notify">
+                    <sheet>
+                        <group>
+                            <field name="telegram_api" required="1" />
+                            <field name="template" string="Template Message" />
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="config_notify_tree" model="ir.ui.view">
+            <field name="name">notify_sales.config_notify.tree</field>
+            <field name="model">notify_sales.config_notify</field>
+            <field name="arch" type="xml">
+                <tree limit="20">
+                    <field name="telegram_api"/>
+                    <field name="template" string="Template Message"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="config_notify_search" model="ir.ui.view">
+            <field name="name">notify_sales.config_notify.search</field>
+            <field name="model">notify_sales.config_notify</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="telegram_api" />
+                    <field name="active" />
+                </search>
+            </field>
+        </record>
+
+        <record id="config_notify_action" model="ir.actions.act_window">
+            <field name="name">Template</field>
+            <field name="res_model">notify_sales.config_notify</field>
+            <field name="view_mode">tree,form,graph,kanban,pivot</field>
+            <field name="view_ids"
+                eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('config_notify_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('config_notify_form')})]" />
+        </record>
+
+        <menuitem id="config" name="Config Notification" parent="sale.menu_sale_config"
+            action="config_notify_action" sequence="2" groups="sales_team.group_sale_manager" />
+    </data>
+</odoo>
